@@ -1,8 +1,10 @@
 " only those line that contain /log..
-v#POST /log#d
+silent! v#POST /log#d
 " ..but not login 200..
-g#/login 200#d
-" ..get rid of rubbish
-%s/^\S*\zs.\{-}\ze{.*}/\t/
-" correct misplaced attribute name
-g/REFERENCE\sSELECTED/s/\<current_selected_id\>/entry_id
+silent! g#/login 200#d
+" ..get rid of rubbish.
+silent! %s/^\S*\zs.\{-}\ze{.*}/\t/
+" Replace badly named attribute name, and...
+silent! g/REFERENCE\sSELECTED/s/\<current_selected_id\>/entry_id
+" ...similarly, update deprecated event identifier.
+silent! %s/REFERENCE\sTARGET\sLINKED/REFERENCE TARGET SELECTED/
