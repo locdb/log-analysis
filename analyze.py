@@ -106,7 +106,7 @@ def main():
     events_by_entry, __rest = parse_input(fileinput.input())
     event_groups = events_by_entry.values()
     # sanity_interval = 900  # 15 minutes
-    sanity_interval = 300  # 5 minutes
+    sanity_interval = 300  # 5 minutes (just two less than 15 minutes)
     # Using very first SEARCH ISSUED is more reliable than REFERENCE SELECTED
     timespans = filter_and_process(event_groups, start_event='SEARCH ISSUED',
                                    end_event='COMMIT PRESSED',
