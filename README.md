@@ -15,5 +15,11 @@ or manually perform the following steps:
 
 Based on the time between `SEARCH ISSUED` and `COMMIT PRESSED`.
 
-Mean time for resolving a citation link: Interval: [0:00:09.930000,
-0:13:08.654000] with mean value: 0:01:41.307036 based on a sample size of 139
+```
+N = 139
+[Low, High] = [0:00:09.930000, 0:13:08.654000]
+Quantile@25 = 0:00:49.385000
+Quantile@50 = 0:01:12.600000
+Quantile@75 = 0:02:03.164000
+Mean =  0:01:41.307036
+```
