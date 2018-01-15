@@ -4,8 +4,10 @@ LOC-DB
 """
 import fileinput
 import json
+import os
 from collections import defaultdict
 from datetime import datetime, timedelta
+from operator import attrgetter
 
 
 
@@ -35,8 +37,12 @@ def filter_and_process(entry_groups,
             return False
         start = msgs.index(start_event)
         end = msgs.index(end_event)
-        if (times[end] - times[start]) > timedelta(seconds=sanity_interval):
+        diff = times[end] - times[start]
+        if sanity_interval is not None and diff > timedelta(seconds=sanity_interval):
             # sanity check, maximum seconds for a single citation (defaults to 15 minutes)
+            return False
+        if diff < timedelta():
+            # This would be strange, still we need to make sure
             return False
         return True
         
@@ -105,6 +111,12 @@ def main():
 
     print("# Time for resolving a citation link")
     print_stats(*compute_stats(timespans))
+    outfile="tmp/link_resolution_raw_seconds.txt"
+    os.makedirs("tmp", exist_ok=True)
+    with open(outfile, 'w') as fhandle:
+        print("Writing raw seconds to", outfile)
+        seconds = map(attrgetter('seconds'), timespans)
+        print(*seconds, sep='\n', file=fhandle)
 
 
 
