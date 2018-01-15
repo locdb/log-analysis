@@ -2,11 +2,11 @@
 
 ## Usage
 
-Either use the **Shorthand**: `sh analyze.sh`
+Either use the **Shorthand**: `sh analyze.sh <log-file>`
 or manually perform the following steps:
 
-1. Apply `prep.vim` to raw logfile from back-end. `:source prep.vim<CR>`
-1. Run `python3 analyze.py` on the preprocessed file from the last step.
+1. Apply `prep.vim` to raw logfile by opening in in `vim` and issuing `:source prep.vim`, then write and quit.
+1. Run `python3 analyze.py < <prepocessed-log-file>` to compute all numbers.
 
 ## To do
 
