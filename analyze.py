@@ -46,8 +46,27 @@ def filter_and_process(entry_groups,
     timespans = [process_reference(g, start_event=start_event, end_event=end_event)
                  for g in valid_groups]
 
-    return len(timespans), (min(timespans), max(timespans)), sum(timespans, timedelta()) / len(timespans)
+    return timespans
 
+
+def compute_stats(timespans):
+    N = len(timespans)
+    interval = (min(timespans), max(timespans))
+    mean = sum(timespans, timedelta()) / len(timespans)
+
+    sorted_values = sorted(timespans)
+    quantiles = {'25': sorted_values[int(N * .25)],
+                 '50': sorted_values[int(N * .50)], 
+                 '75': sorted_values[int(N * .75)]}
+
+    return N, interval, quantiles, mean
+
+def print_stats(N, interval, quantiles, mean):
+    print("N =", N)
+    print("[Low, High] = [{}, {}]".format(*interval))
+    for quant, value in quantiles.items():
+        print("Quantile@{} = {}".format(quant, value))
+    print("Mean = ", mean)
 
 def parse_input(lines):
     """ Groups the lines of the logfile by entry_id and stores (time, event)
@@ -72,16 +91,20 @@ def parse_input(lines):
 
     return references, remainder
 
+
+
+
 def main():
     events_by_entry, __rest = parse_input(fileinput.input())
     event_groups = events_by_entry.values()
     # Using very first SEARCH ISSUED is more reliable than REFERENCE SELECTED
-    N, (low, high), mean = filter_and_process(event_groups,
+    timespans = filter_and_process(event_groups,
                                               start_event='SEARCH ISSUED',
                                               end_event='COMMIT PRESSED',
                                               sanity_interval=900)
-    stats = "Interval: [{}, {}] with mean value: {} based on a sample size of {}"
-    print("Mean time for resolving a citation link:", stats.format(low, high, mean, N))
+
+    print("# Time for resolving a citation link")
+    print_stats(*compute_stats(timespans))
 
 
 
