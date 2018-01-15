@@ -23,7 +23,7 @@ def process_reference(events,
 
 
 def filter_and_process(entry_groups,
-                       start_event='SEARCH_ISSUED',
+                       start_event='SEARCH ISSUED',
                        end_event='COMMIT PRESSED',
                        sanity_interval=900,
                        ):
