@@ -17,13 +17,13 @@ def process_reference(events,
     times, msgs = list(zip(*events))
     start = msgs.index(start_event)
     end = msgs.index(end_event)
-    assert start < end, "End event time before start event time"
+    assert start < end, "Start event after end event"
     span = times[end] - times[start]
     return span
 
 
 def filter_and_process(entry_groups,
-                       start_event='SEARCH_ISSUED',
+                       start_event='SEARCH ISSUED',
                        end_event='COMMIT PRESSED',
                        sanity_interval=900,
                        ):
@@ -36,7 +36,7 @@ def filter_and_process(entry_groups,
         start = msgs.index(start_event)
         end = msgs.index(end_event)
         if (times[end] - times[start]) > timedelta(seconds=sanity_interval):
-            # sanity check, maximum 10 minutes for a single citation
+            # sanity check, maximum seconds for a single citation (defaults to 15 minutes)
             return False
         return True
         
