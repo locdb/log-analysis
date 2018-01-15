@@ -10,13 +10,13 @@ from datetime import datetime, timedelta
 
 
 def process_reference(events,
-                      start_msg='SEARCH ISSUED',
-                      end_msg='COMMIT PRESSED'):
+                      start_event='SEARCH ISSUED',
+                      end_event='COMMIT PRESSED'):
     """ Finds the first indices of start_msg and end_msg respectively and
     computes the timespan in between """
     times, msgs = list(zip(*events))
-    start = msgs.index(start_msg)
-    end = msgs.index(end_msg)
+    start = msgs.index(start_event)
+    end = msgs.index(end_event)
     assert start < end, "End event time before start event time"
     span = times[end] - times[start]
     return span
@@ -43,7 +43,7 @@ def filter_and_process(entry_groups,
     # First perform validity checks, such that invalid groups do not contribute to mean
     valid_groups = filter(is_valid, entry_groups)
 
-    timespans = [process_reference(g, start_msg=start_event, end_msg=end_event)
+    timespans = [process_reference(g, start_event=start_event, end_event=end_event)
                  for g in valid_groups]
 
     return len(timespans), (min(timespans), max(timespans)), sum(timespans, timedelta()) / len(timespans)
@@ -82,8 +82,6 @@ def main():
                                               sanity_interval=900)
     stats = "Interval: [{}, {}] with mean value: {} based on a sample size of {}"
     print("Mean time for resolving a citation link:", stats.format(low, high, mean, N))
-
-
 
 
 
