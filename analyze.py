@@ -36,7 +36,7 @@ def filter_and_process(entry_groups,
         start = msgs.index(start_event)
         end = msgs.index(end_event)
         if (times[end] - times[start]) > timedelta(seconds=sanity_interval):
-            # sanity check, maximum 10 minutes for a single citation
+            # sanity check, maximum seconds for a single citation (defaults to 15 minutes)
             return False
         return True
         
