@@ -17,7 +17,7 @@ def process_reference(events,
     times, msgs = list(zip(*events))
     start = msgs.index(start_event)
     end = msgs.index(end_event)
-    assert start < end, "End event time before start event time"
+    assert start < end, "Start event after end event"
     span = times[end] - times[start]
     return span
 
