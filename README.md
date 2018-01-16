@@ -26,4 +26,4 @@ Quantile@75 = 120
 Mean =  92.45255474452554
 ```
 
-For more detailed, and more up-to-date, results check [the results file](results.md).
+For more detailed, and more up-to-date, results check [the results file](results.md) as well as the [results directory](results).
