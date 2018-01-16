@@ -201,7 +201,6 @@ def main():
                    ('SEARCH ISSUED', is_external_suggestion),
                    sanity_interval=300,
                    name='external sug time')
-    print("Done.")
 
 
 if __name__ == '__main__':
