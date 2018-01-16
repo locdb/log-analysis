@@ -209,8 +209,9 @@ def eval_span(event_groups,
         plt.boxplot(timespans)
         plt.savefig(prefix+'_boxplot.png')
 
-        # plt.bar()
-        # plt.savefig(prefix+'_histogram.png')
+        plt.clf()
+        plt.hist(timespans)
+        plt.savefig(prefix+'_histogram.png')
     except ImportError:
         print("[warning] For data visualization, matplotlib is required",
               file=sys.stderr)
@@ -229,13 +230,13 @@ def main():
               sanity_interval=300,
               name='linking time', time_unit='seconds')
 
-    def is_internal_suggestion(e):
+    def is_internal_suggestion(evnt):
         """ True iff event corresponds to arrival of internal suggestions """
-        return e['msg'] == "SUGGESTIONS ARRIVED" and e['internal']
+        return evnt['msg'] == "SUGGESTIONS ARRIVED" and evnt['internal']
 
-    def is_external_suggestion(e):
+    def is_external_suggestion(evnt):
         """ True iff event corresponds to arrival of external suggestions """
-        return e['msg'] == "SUGGESTIONS ARRIVED" and not e['internal']
+        return evnt['msg'] == "SUGGESTIONS ARRIVED" and not evnt['internal']
 
     eval_span(event_groups,
               ('SEARCH ISSUED', is_internal_suggestion),
