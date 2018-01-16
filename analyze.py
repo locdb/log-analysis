@@ -1,15 +1,21 @@
-""" This script analyzes the contents of a preprocessed (prep.vim) log file of LOC-DB """
+"""
+This script analyzes the contents of a preprocessed (by prep.vim) log file of
+the LOC-DB Production System
+"""
 import fileinput
 import json
 import os
 import sys
 from collections import defaultdict
 from datetime import datetime, timedelta
-from operator import attrgetter
-
 
 
 def event_index(events, key):
+    """
+    Find's the index of an event. Expects `key` to be either callable to
+    evaluate on each event or a (string) value to which the `msg` property of
+    the event is compared. The return value -1 means that no match was found.
+    """
     if callable(key):
         for i, e in enumerate(events):
             if key(e):
@@ -21,12 +27,15 @@ def event_index(events, key):
 
     return -1
 
+
 def process_reference(timed_events,
                       key_start='SEARCH ISSUED',
                       key_end='COMMIT PRESSED',
                       ):
-    """ Finds the first indices of start_msg and end_msg respectively and
-    computes the timespan in between """
+    """
+    Finds the first indices of start_msg and end_msg respectively and
+    computes the timespan in between
+    """
     times, events = list(zip(*timed_events))
 
     # start = msgs.index(start_event)
@@ -45,8 +54,10 @@ def filter_and_process(entry_groups,
                        key_end='COMMIT PRESSED',
                        sanity_interval=900,
                        ):
-    """ Filters the reference items for validity, then computes the time span
-    for each reference and returns the mean time """
+    """
+    Filters the reference items for validity, then computes the time span
+    for each reference and returns the mean time
+    """
     def is_valid(ref):
         times, events = list(zip(*ref))
         start = event_index(events, key_start)
@@ -130,6 +141,9 @@ def eval_count(event_groups,
                criterion,
                name,
                prefix_dir='results'):
+    """
+    Counts the number of occurences of matching events in each event group
+    """
     def satisfies(event):
         if callable(criterion):
             return criterion(event)
