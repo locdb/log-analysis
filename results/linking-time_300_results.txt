@@ -1,0 +1,6 @@
+N = 137
+[Low, High] = [9, 288]
+Quantile@25 = 49
+Quantile@50 = 72
+Quantile@75 = 120
+Mean =  92.45255474452554
