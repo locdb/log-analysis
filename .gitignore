@@ -2,3 +2,5 @@
 data/*
 # preprocessed data files
 prep/*
+*.swp
+*.swo
