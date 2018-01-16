@@ -2,7 +2,7 @@
 
 ## Usage
 
-Either use the **Shorthand**: `sh analyze.sh <log-file>`
+Use either the **shorthand**: `sh analyze.sh <log-file>`
 or manually perform the following steps:
 
 1. Apply `prep.vim` to raw logfile by opening in `vim` and issuing `:source
@@ -11,7 +11,7 @@ or manually perform the following steps:
 
 ## First Results
 
-### Time to resolve a citation link
+### Time to Resolve a Citation Link
 
 Based on the time between `SEARCH ISSUED` and `COMMIT PRESSED`. Sanity cut-off at 5 minutes.
 
