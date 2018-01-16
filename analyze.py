@@ -126,13 +126,39 @@ def parse_input(lines):
     return events_by_entry, remainder
 
 
+def eval_count(event_groups,
+               criterion,
+               name,
+               prefix_dir='results'):
+    def satisfies(event):
+        if callable(criterion):
+            return criterion(event)
+        else:
+            return event['msg'] == criterion
 
-def eval_criterion(event_groups,
-                   criterion,
-                   name,
-                   sanity_interval=None,
-                   time_unit=None,
-                   prefix_dir='results'):
+    counts = [len(list(filter(satisfies, list(zip(*es))[1]))) for es in
+              event_groups]
+
+    print("\n## Count Criterion: ", name + "\n")
+    print("\n```")
+    stats = compute_stats(counts)
+    print_stats(*stats)
+    print("```\n")
+    os.makedirs(prefix_dir, exist_ok=True)
+    prefix = os.path.join(prefix_dir, name.lower().replace(' ', '-'))
+    print("Writing results to", prefix + '*', file=sys.stderr)
+    with open(prefix+'_counts', 'w') as fhandle:
+        print(*counts, sep='\n', file=fhandle)
+    with open(prefix+'_results', 'w') as fhandle:
+        print_stats(*stats, file=fhandle)
+
+
+def eval_span(event_groups,
+              criterion,
+              name,
+              sanity_interval=None,
+              time_unit=None,
+              prefix_dir='results'):
     """
     Args
     ====
@@ -147,22 +173,23 @@ def eval_criterion(event_groups,
                                    sanity_interval=sanity_interval)
     if time_unit is not None:
         timespans = [t[time_unit] for t in timespans]
-    print("\n# Criterion: ", name + "\n")
+    print("\n## Span Criterion: ", name + "\n")
     print("Sanity interval: {} seconds.".format(sanity_interval))
     print("\n```")
-    print_stats(*compute_stats(timespans))
+    stats = compute_stats(timespans)
+    print_stats(*stats)
+    print("```\n")
     os.makedirs(prefix_dir, exist_ok=True)
     prefix = os.path.join(prefix_dir, name.lower().replace(' ', '-')) \
         + '_' + str(sanity_interval) if sanity_interval is not None else 'ALL'
 
-    print("```\n")
     print("Writing results to", prefix + '*', file=sys.stderr)
     # write raw seconds file
     with open(prefix+'_seconds.txt', 'w') as fhandle:
         print(*timespans, sep='\n', file=fhandle)
     # write results
     with open(prefix+'_results.txt', 'w') as fhandle:
-        print_stats(*compute_stats(timespans), file=fhandle)
+        print_stats(*stats, file=fhandle)
     try:
         from matplotlib import pyplot as plt
         plt.boxplot(timespans)
@@ -171,9 +198,8 @@ def eval_criterion(event_groups,
         # plt.bar()
         # plt.savefig(prefix+'_histogram.png')
     except ImportError:
-        print("[warning] For data visualization, matplotlib is required", file=sys.stderr)
-
-    # write box plot
+        print("[warning] For data visualization, matplotlib is required",
+              file=sys.stderr)
 
 
 def main():
@@ -181,11 +207,13 @@ def main():
     events_by_entry, __rest = parse_input(fileinput.input())
     event_groups = events_by_entry.values()
 
+    print("# Results\n")
+
     # Using very first SEARCH ISSUED is more reliable than REFERENCE SELECTED
-    eval_criterion(event_groups,
-                   ('SEARCH ISSUED', 'COMMIT PRESSED'),
-                   sanity_interval=300,
-                   name='linking time')
+    eval_span(event_groups,
+              ('SEARCH ISSUED', 'COMMIT PRESSED'),
+              sanity_interval=300,
+              name='linking time')
 
     def is_internal_suggestion(e):
         return e['msg'] == "SUGGESTIONS ARRIVED" and e['internal']
@@ -193,14 +221,18 @@ def main():
     def is_external_suggestion(e):
         return e['msg'] == "SUGGESTIONS ARRIVED" and not e['internal']
 
-    eval_criterion(event_groups,
-                   ('SEARCH ISSUED', is_internal_suggestion),
-                   sanity_interval=300,
-                   name='internal sug time')
-    eval_criterion(event_groups,
-                   ('SEARCH ISSUED', is_external_suggestion),
-                   sanity_interval=300,
-                   name='external sug time')
+    eval_span(event_groups,
+              ('SEARCH ISSUED', is_internal_suggestion),
+              sanity_interval=300,
+              name='internal suggestion time')
+    eval_span(event_groups,
+              ('SEARCH ISSUED', is_external_suggestion),
+              sanity_interval=300,
+              name='external suggestion time')
+
+    eval_count(event_groups,
+               'SEARCH ISSUED',
+               name='number of issued searches')
 
 
 if __name__ == '__main__':

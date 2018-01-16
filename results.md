@@ -1,5 +1,7 @@
+# Results
 
-# Criterion:  linking time
+
+## Span Criterion:  linking time
 
 Sanity interval: 300 seconds.
 
@@ -13,7 +15,7 @@ Mean =  0:01:52.063464
 ```
 
 
-# Criterion:  internal sug time
+## Span Criterion:  internal suggestion time
 
 Sanity interval: 300 seconds.
 
@@ -27,7 +29,7 @@ Mean =  0:00:00.082011
 ```
 
 
-# Criterion:  external sug time
+## Span Criterion:  external suggestion time
 
 Sanity interval: 300 seconds.
 
@@ -38,5 +40,18 @@ Quantile@25 = 0:00:00.711000
 Quantile@50 = 0:00:01.485000
 Quantile@75 = 0:00:03.966000
 Mean =  0:00:05.592133
+```
+
+
+## Count Criterion:  number of issued searches
+
+
+```
+N = 440
+[Low, High] = [1, 36]
+Quantile@25 = 2
+Quantile@50 = 2
+Quantile@75 = 4
+Mean =  3.4545454545454546
 ```
 

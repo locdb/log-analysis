@@ -1,0 +1,6 @@
+N = 440
+[Low, High] = [1, 36]
+Quantile@25 = 2
+Quantile@50 = 2
+Quantile@75 = 4
+Mean =  3.4545454545454546
