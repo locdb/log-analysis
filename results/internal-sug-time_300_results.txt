@@ -1,6 +1,6 @@
-N = 229
-[Low, High] = [0, 0]
-Quantile@25 = 0
-Quantile@50 = 0
-Quantile@75 = 0
-Mean =  0.0
+N = 440
+[Low, High] = [0:00:00.015000, 0:00:00.537000]
+Quantile@25 = 0:00:00.050000
+Quantile@50 = 0:00:00.063000
+Quantile@75 = 0:00:00.087000
+Mean =  0:00:00.082011
