@@ -153,6 +153,9 @@ def eval_criterion(event_groups, criterion, name, sanity_interval=None, prefix_d
         from matplotlib import pyplot as plt
         plt.boxplot(seconds)
         plt.savefig(prefix+'_boxplot.png')
+
+        # plt.bar()
+        # plt.savefig(prefix+'_histogram.png')
     except ImportError:
         print("For visualization, matplotlib is required")
     print("Done.")

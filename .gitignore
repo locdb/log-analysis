@@ -1,4 +1,4 @@
 # this is not suited for github
-loc-db-production-out-1.log
+data/*
 # temporary files
 tmp/
