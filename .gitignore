@@ -1,4 +1,4 @@
 # this is not suited for github
 data/*
-# temporary files
-tmp/
+# preprocessed data files
+prep/*
