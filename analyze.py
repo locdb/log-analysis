@@ -17,12 +17,12 @@ def event_index(events, key):
     the event is compared. The return value -1 means that no match was found.
     """
     if callable(key):
-        for i, e in enumerate(events):
-            if key(e):
+        for i, evnt in enumerate(events):
+            if key(evnt):
                 return i
     else:
-        for i, e in enumerate(events):
-            if e["msg"] == key:
+        for i, evnt in enumerate(events):
+            if evnt["msg"] == key:
                 return i
 
     return -1
@@ -30,8 +30,7 @@ def event_index(events, key):
 
 def process_reference(timed_events,
                       key_start='SEARCH ISSUED',
-                      key_end='COMMIT PRESSED',
-                      ):
+                      key_end='COMMIT PRESSED'):
     """
     Finds the first indices of start_msg and end_msg respectively and
     computes the timespan in between
@@ -52,13 +51,13 @@ def process_reference(timed_events,
 def filter_and_process(entry_groups,
                        key_start='SEARCH ISSUED',
                        key_end='COMMIT PRESSED',
-                       sanity_interval=900,
-                       ):
+                       sanity_interval=900):
     """
     Filters the reference items for validity, then computes the time span
     for each reference and returns the mean time
     """
     def is_valid(ref):
+        """ Returns true, iff entry_group is valid """
         times, events = list(zip(*ref))
         start = event_index(events, key_start)
         end = event_index(events, key_end)
@@ -186,7 +185,7 @@ def eval_span(event_groups,
                                    key_end=key_end,
                                    sanity_interval=sanity_interval)
     if time_unit is not None:
-        timespans = [t[time_unit] for t in timespans]
+        timespans = [getattr(t, time_unit) for t in timespans]
     print("\n## Span Criterion: ", name + "\n")
     print("Sanity interval: {} seconds.".format(sanity_interval))
     print("\n```")
@@ -206,6 +205,7 @@ def eval_span(event_groups,
         print_stats(*stats, file=fhandle)
     try:
         from matplotlib import pyplot as plt
+        plt.clf()
         plt.boxplot(timespans)
         plt.savefig(prefix+'_boxplot.png')
 
@@ -227,22 +227,24 @@ def main():
     eval_span(event_groups,
               ('SEARCH ISSUED', 'COMMIT PRESSED'),
               sanity_interval=300,
-              name='linking time')
+              name='linking time', time_unit='seconds')
 
     def is_internal_suggestion(e):
+        """ True iff event corresponds to arrival of internal suggestions """
         return e['msg'] == "SUGGESTIONS ARRIVED" and e['internal']
 
     def is_external_suggestion(e):
+        """ True iff event corresponds to arrival of external suggestions """
         return e['msg'] == "SUGGESTIONS ARRIVED" and not e['internal']
 
     eval_span(event_groups,
               ('SEARCH ISSUED', is_internal_suggestion),
               sanity_interval=300,
-              name='internal suggestion time')
+              name='internal suggestion time', time_unit='microseconds')
     eval_span(event_groups,
               ('SEARCH ISSUED', is_external_suggestion),
               sanity_interval=300,
-              name='external suggestion time')
+              name='external suggestion time', time_unit='microseconds')
 
     eval_count(event_groups,
                'SEARCH ISSUED',

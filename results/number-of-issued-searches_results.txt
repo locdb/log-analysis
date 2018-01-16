@@ -3,4 +3,4 @@ N = 440
 Quantile@25 = 2
 Quantile@50 = 2
 Quantile@75 = 4
-Mean =  3.4545454545454546
+Mean =  3.4977272727272726
