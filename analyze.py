@@ -149,12 +149,14 @@ def eval_criterion(event_groups,
         timespans = [t[time_unit] for t in timespans]
     print("\n# Criterion: ", name + "\n")
     print("Sanity interval: {} seconds.".format(sanity_interval))
+    print("\n```")
     print_stats(*compute_stats(timespans))
     os.makedirs(prefix_dir, exist_ok=True)
     prefix = os.path.join(prefix_dir, name.lower().replace(' ', '-')) \
         + '_' + str(sanity_interval) if sanity_interval is not None else 'ALL'
 
-    print("Writing results to", prefix + '*')
+    print("```\n")
+    print("Writing results to", prefix + '*', file=sys.stderr)
     # write raw seconds file
     with open(prefix+'_seconds.txt', 'w') as fhandle:
         print(*timespans, sep='\n', file=fhandle)
@@ -169,7 +171,7 @@ def eval_criterion(event_groups,
         # plt.bar()
         # plt.savefig(prefix+'_histogram.png')
     except ImportError:
-        print("[warning] For data visualization, matplotlib is required")
+        print("[warning] For data visualization, matplotlib is required", file=sys.stderr)
 
     # write box plot
 
