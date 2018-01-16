@@ -147,9 +147,9 @@ def eval_count(event_groups,
     os.makedirs(prefix_dir, exist_ok=True)
     prefix = os.path.join(prefix_dir, name.lower().replace(' ', '-'))
     print("Writing results to", prefix + '*', file=sys.stderr)
-    with open(prefix+'_counts', 'w') as fhandle:
+    with open(prefix+'_counts.txt', 'w') as fhandle:
         print(*counts, sep='\n', file=fhandle)
-    with open(prefix+'_results', 'w') as fhandle:
+    with open(prefix+'_results.txt', 'w') as fhandle:
         print_stats(*stats, file=fhandle)
 
 
