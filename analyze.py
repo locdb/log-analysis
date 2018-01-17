@@ -289,12 +289,16 @@ def main():
     events_by_entry, ungrouped_events = parse_input(fileinput.input())
     event_groups = events_by_entry.values()
 
+    sanity_interval = 900
+
     print("# Results\n")
+
+    print("N = ", len(event_groups))
 
     # Using very first SEARCH ISSUED is more reliable than REFERENCE SELECTED
     eval_span(event_groups,
               ('SEARCH ISSUED', 'COMMIT PRESSED'),
-              sanity_interval=300,
+              sanity_interval=sanity_interval,
               name='linking time')
 
     def is_internal_suggestion(evnt):
@@ -307,11 +311,11 @@ def main():
 
     eval_span(event_groups,
               ('SEARCH ISSUED', is_internal_suggestion),
-              sanity_interval=300,
+              sanity_interval=sanity_interval,
               name='internal suggestion time')
     eval_span(event_groups,
               ('SEARCH ISSUED', is_external_suggestion),
-              sanity_interval=300,
+              sanity_interval=sanity_interval,
               name='external suggestion time')
 
     eval_count(event_groups,
@@ -319,7 +323,7 @@ def main():
                name='number of issued searches')
 
     eval_multi_spans(ungrouped_events, ('START EDITING', 'STOP EDITING'),
-                     sanity_interval=300,
+                     sanity_interval=sanity_interval,
                      name='editing time')
 
 
