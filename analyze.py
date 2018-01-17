@@ -208,7 +208,7 @@ def plot_box_hist(numbers, prefix):
         plt.clf()
         plt.ylabel("amount")
         plt.xlabel("seconds")
-        plt.hist(numbers)
+        plt.hist(numbers, color='b')
         plt.savefig(prefix+'_histogram.png')
     except ImportError:
         print("[warning] For data visualization, matplotlib is required",
