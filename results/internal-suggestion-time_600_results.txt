@@ -1,6 +1,6 @@
-N = 440
+N = 559
 [Low, High] = [0.015, 0.537]
-Quantile@25 = 0.05
-Quantile@50 = 0.063
-Quantile@75 = 0.087
-Mean =  0.08201136363636359
+Quantile@25 = 0.048
+Quantile@50 = 0.059
+Quantile@75 = 0.081
+Mean =  0.0773524150268335

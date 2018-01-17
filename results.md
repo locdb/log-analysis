@@ -1,162 +1,18 @@
 # Results
 
-N =  440
-
-## Span Criterion:  linking time
-
-Sanity interval: 300 seconds.
-
-```
-N = 280
-[Low, High] = [9.93, 288.716]
-Quantile@25 = 57.429
-Quantile@50 = 94.432
-Quantile@75 = 156.819
-Mean =  112.0634642857143
-```
-
-
-## Span Criterion:  internal suggestion time
-
-Sanity interval: 300 seconds.
-
-```
-N = 440
-[Low, High] = [0.015, 0.537]
-Quantile@25 = 0.05
-Quantile@50 = 0.063
-Quantile@75 = 0.087
-Mean =  0.08201136363636359
-```
-
-
-## Span Criterion:  external suggestion time
-
-Sanity interval: 300 seconds.
-
-```
-N = 429
-[Low, High] = [0.594, 118.36]
-Quantile@25 = 0.711
-Quantile@50 = 1.485
-Quantile@75 = 3.966
-Mean =  5.59213286713287
-```
-
-
-## Count Criterion:  number of issued searches
-
-
-```
-N = 440
-[Low, High] = [1, 36]
-Quantile@25 = 2
-Quantile@50 = 2
-Quantile@75 = 4
-Mean =  3.4545454545454546
-```
-
-
-## Multi-Span Criterion:  editing time
-
-Sanity interval: 300 seconds.
-
-```
-N = 464
-[Low, High] = [0.001, 256.381]
-Quantile@25 = 13.334
-Quantile@50 = 28.845
-Quantile@75 = 55.048
-Mean =  41.59921551724137
-```
-
-# Results
-
-N =  440
-
-## Span Criterion:  linking time
-
-Sanity interval: 900 seconds.
-
-```
-N = 303
-[Low, High] = [9.93, 878.295]
-Quantile@25 = 59.538
-Quantile@50 = 101.899
-Quantile@75 = 172.999
-Mean =  141.28182508250842
-```
-
-
-## Span Criterion:  internal suggestion time
-
-Sanity interval: 900 seconds.
-
-```
-N = 440
-[Low, High] = [0.015, 0.537]
-Quantile@25 = 0.05
-Quantile@50 = 0.063
-Quantile@75 = 0.087
-Mean =  0.08201136363636359
-```
-
-
-## Span Criterion:  external suggestion time
-
-Sanity interval: 900 seconds.
-
-```
-N = 430
-[Low, High] = [0.594, 581.547]
-Quantile@25 = 0.711
-Quantile@50 = 1.486
-Quantile@75 = 4.009
-Mean =  6.931562790697676
-```
-
-
-## Count Criterion:  number of issued searches
-
-
-```
-N = 440
-[Low, High] = [1, 36]
-Quantile@25 = 2
-Quantile@50 = 2
-Quantile@75 = 4
-Mean =  3.4545454545454546
-```
-
-
-## Multi-Span Criterion:  editing time
-
-Sanity interval: 900 seconds.
-
-```
-N = 468
-[Low, High] = [0.001, 406.626]
-Quantile@25 = 13.379
-Quantile@50 = 29.288
-Quantile@75 = 56.714
-Mean =  44.29395940170941
-```
-
-# Results
-
-N =  440
+N =  559
 
 ## Span Criterion:  linking time
 
 Sanity interval: 600 seconds.
 
 ```
-N = 297
+N = 407
 [Low, High] = [9.93, 557.195]
-Quantile@25 = 59.463
-Quantile@50 = 99.94
-Quantile@75 = 169.853
-Mean =  129.61857239057252
+Quantile@25 = 50.593
+Quantile@50 = 90.903
+Quantile@75 = 160.876
+Mean =  120.46387469287474
 ```
 
 
@@ -165,12 +21,12 @@ Mean =  129.61857239057252
 Sanity interval: 600 seconds.
 
 ```
-N = 440
+N = 559
 [Low, High] = [0.015, 0.537]
-Quantile@25 = 0.05
-Quantile@50 = 0.063
-Quantile@75 = 0.087
-Mean =  0.08201136363636359
+Quantile@25 = 0.048
+Quantile@50 = 0.059
+Quantile@75 = 0.081
+Mean =  0.0773524150268335
 ```
 
 
@@ -179,12 +35,12 @@ Mean =  0.08201136363636359
 Sanity interval: 600 seconds.
 
 ```
-N = 430
-[Low, High] = [0.594, 581.547]
-Quantile@25 = 0.711
-Quantile@50 = 1.486
-Quantile@75 = 4.009
-Mean =  6.931562790697676
+N = 549
+[Low, High] = [0.581, 581.547]
+Quantile@25 = 0.707
+Quantile@50 = 1.234
+Quantile@75 = 3.272
+Mean =  5.827887067395262
 ```
 
 
@@ -192,12 +48,12 @@ Mean =  6.931562790697676
 
 
 ```
-N = 440
+N = 559
 [Low, High] = [1, 36]
 Quantile@25 = 2
 Quantile@50 = 2
 Quantile@75 = 4
-Mean =  3.4545454545454546
+Mean =  3.4257602862254024
 ```
 
 
@@ -206,11 +62,11 @@ Mean =  3.4545454545454546
 Sanity interval: 600 seconds.
 
 ```
-N = 468
-[Low, High] = [0.001, 406.626]
-Quantile@25 = 13.379
-Quantile@50 = 29.288
-Quantile@75 = 56.714
-Mean =  44.29395940170941
+N = 588
+[Low, High] = [0.001, 597.897]
+Quantile@25 = 14.257
+Quantile@50 = 27.311
+Quantile@75 = 54.935
+Mean =  44.01810374149661
 ```
 
