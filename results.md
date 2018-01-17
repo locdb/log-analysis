@@ -55,3 +55,17 @@ Quantile@75 = 4
 Mean =  3.4545454545454546
 ```
 
+
+## Multi-Span Criterion:  editing time
+
+Sanity interval: 300 seconds.
+
+```
+N = 464
+[Low, High] = [0.001, 256.381]
+Quantile@25 = 13.334
+Quantile@50 = 28.845
+Quantile@75 = 55.048
+Mean =  41.59921551724137
+```
+
