@@ -289,7 +289,7 @@ def main():
     events_by_entry, ungrouped_events = parse_input(fileinput.input())
     event_groups = events_by_entry.values()
 
-    sanity_interval = 900
+    sanity_interval = 600
 
     print("# Results\n")
 
