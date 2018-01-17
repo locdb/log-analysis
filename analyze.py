@@ -201,10 +201,13 @@ def plot_box_hist(numbers, prefix):
     try:
         from matplotlib import pyplot as plt
         plt.clf()
+        plt.ylabel("seconds")
         plt.boxplot(numbers)
         plt.savefig(prefix+'_boxplot.png')
 
         plt.clf()
+        plt.ylabel("amount")
+        plt.xlabel("seconds")
         plt.hist(numbers)
         plt.savefig(prefix+'_histogram.png')
     except ImportError:
