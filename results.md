@@ -7,11 +7,11 @@ Sanity interval: 300 seconds.
 
 ```
 N = 280
-[Low, High] = [9, 288]
-Quantile@25 = 57
-Quantile@50 = 94
-Quantile@75 = 156
-Mean =  111.56785714285714
+[Low, High] = [9.93, 288.716]
+Quantile@25 = 57.429
+Quantile@50 = 94.432
+Quantile@75 = 156.819
+Mean =  112.0634642857143
 ```
 
 
@@ -21,11 +21,11 @@ Sanity interval: 300 seconds.
 
 ```
 N = 440
-[Low, High] = [15000, 537000]
-Quantile@25 = 50000
-Quantile@50 = 63000
-Quantile@75 = 87000
-Mean =  82011.36363636363
+[Low, High] = [0.015, 0.537]
+Quantile@25 = 0.05
+Quantile@50 = 0.063
+Quantile@75 = 0.087
+Mean =  0.08201136363636359
 ```
 
 
@@ -35,11 +35,11 @@ Sanity interval: 300 seconds.
 
 ```
 N = 429
-[Low, High] = [1000, 998000]
-Quantile@25 = 445000
-Quantile@50 = 655000
-Quantile@75 = 748000
-Mean =  587470.8624708625
+[Low, High] = [0.594, 118.36]
+Quantile@25 = 0.711
+Quantile@50 = 1.485
+Quantile@75 = 3.966
+Mean =  5.59213286713287
 ```
 
 
@@ -52,6 +52,6 @@ N = 440
 Quantile@25 = 2
 Quantile@50 = 2
 Quantile@75 = 4
-Mean =  3.4977272727272726
+Mean =  3.4545454545454546
 ```
 
