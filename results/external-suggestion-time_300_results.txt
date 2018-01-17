@@ -1,6 +1,6 @@
 N = 429
-[Low, High] = [1000, 998000]
-Quantile@25 = 445000
-Quantile@50 = 655000
-Quantile@75 = 748000
-Mean =  587470.8624708625
+[Low, High] = [0.594, 118.36]
+Quantile@25 = 0.711
+Quantile@50 = 1.485
+Quantile@75 = 3.966
+Mean =  5.59213286713287

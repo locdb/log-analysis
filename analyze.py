@@ -181,11 +181,11 @@ def eval_span(event_groups,
     name: identifer used for storage and reporting
     """
     key_start, key_end = criterion
-    timespans = filter_and_process(event_groups, key_start=key_start,
+    timespans = filter_and_process(event_groups,
+                                   key_start=key_start,
                                    key_end=key_end,
                                    sanity_interval=sanity_interval)
-    if time_unit is not None:
-        timespans = [getattr(t, time_unit) for t in timespans]
+    timespans = [t.total_seconds() for t in timespans]
     print("\n## Span Criterion: ", name + "\n")
     print("Sanity interval: {} seconds.".format(sanity_interval))
     print("\n```")
@@ -198,7 +198,7 @@ def eval_span(event_groups,
 
     print("Writing results to", prefix + '*', file=sys.stderr)
     # write raw seconds file
-    with open(prefix+'_seconds.txt', 'w') as fhandle:
+    with open(prefix + '_seconds.txt', 'w') as fhandle:
         print(*timespans, sep='\n', file=fhandle)
     # write results
     with open(prefix+'_results.txt', 'w') as fhandle:
@@ -228,7 +228,7 @@ def main():
     eval_span(event_groups,
               ('SEARCH ISSUED', 'COMMIT PRESSED'),
               sanity_interval=300,
-              name='linking time', time_unit='seconds')
+              name='linking time')
 
     def is_internal_suggestion(evnt):
         """ True iff event corresponds to arrival of internal suggestions """
@@ -241,11 +241,11 @@ def main():
     eval_span(event_groups,
               ('SEARCH ISSUED', is_internal_suggestion),
               sanity_interval=300,
-              name='internal suggestion time', time_unit='microseconds')
+              name='internal suggestion time')
     eval_span(event_groups,
               ('SEARCH ISSUED', is_external_suggestion),
               sanity_interval=300,
-              name='external suggestion time', time_unit='microseconds')
+              name='external suggestion time')
 
     eval_count(event_groups,
                'SEARCH ISSUED',

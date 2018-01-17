@@ -1,6 +1,6 @@
 N = 280
-[Low, High] = [9, 288]
-Quantile@25 = 57
-Quantile@50 = 94
-Quantile@75 = 156
-Mean =  111.56785714285714
+[Low, High] = [9.93, 288.716]
+Quantile@25 = 57.429
+Quantile@50 = 94.432
+Quantile@75 = 156.819
+Mean =  112.0634642857143
