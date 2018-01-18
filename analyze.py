@@ -6,7 +6,8 @@ import fileinput
 import json
 import os
 import sys
-from collections import defaultdict
+from collections import defaultdict, Counter
+from operator import itemgetter
 from datetime import datetime, timedelta
 
 
@@ -189,6 +190,9 @@ def eval_count(event_groups,
     os.makedirs(prefix_dir, exist_ok=True)
     prefix = os.path.join(prefix_dir, name.lower().replace(' ', '-'))
     print("Writing results to", prefix + '*', file=sys.stderr)
+    with open(prefix+'_distribution.txt', 'w') as fhandle:
+        print(*sorted(Counter(counts).items(), key=itemgetter(0)), sep='\n',
+              file=fhandle)
     with open(prefix+'_counts.txt', 'w') as fhandle:
         print(*counts, sep='\n', file=fhandle)
     with open(prefix+'_results.txt', 'w') as fhandle:
