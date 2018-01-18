@@ -221,7 +221,7 @@ def plot_box_hist(numbers, prefix):
         plt.xlabel("seconds")
         plt.xticks([0, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600])
         plt.hist(numbers, [0, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600],
-                 color='royalblue', align='mid')
+                 color='royalblue', align='mid', rwidth=.5)
         plt.savefig(prefix+'_histogram1.pdf')
 
         plt.clf()
