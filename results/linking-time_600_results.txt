@@ -1,6 +1,6 @@
-N = 407
+N = 444
 [Low, High] = [9.93, 557.195]
-Quantile@25 = 50.593
-Quantile@50 = 90.903
-Quantile@75 = 160.876
-Mean =  120.46387469287474
+Quantile@25 = 49.385
+Quantile@50 = 89.453
+Quantile@75 = 159.185
+Mean =  117.99254279279283

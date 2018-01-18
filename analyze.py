@@ -217,6 +217,7 @@ def plot_box_hist(numbers, prefix):
 
         plt.clf()
         plt.xlabel("seconds")
+        # plt.yticks(["citation linking"])
         plt.violinplot(numbers, showmeans=True, showmedians=True, vert=False)
         plt.savefig(prefix+'_violinplot.png')
     except ImportError:

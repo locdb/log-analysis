@@ -1,6 +1,6 @@
-N = 588
+N = 634
 [Low, High] = [0.001, 597.897]
-Quantile@25 = 14.257
-Quantile@50 = 27.311
-Quantile@75 = 54.935
-Mean =  44.01810374149661
+Quantile@25 = 14.343
+Quantile@50 = 26.966
+Quantile@75 = 55.757
+Mean =  43.79211356466877

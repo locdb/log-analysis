@@ -15,15 +15,19 @@ or manually perform the following steps:
 
 Based on the time between `SEARCH ISSUED` and `COMMIT PRESSED`. Sanity cut-off at 5 minutes.
 
-![Boxplot](boxplot.png)
+![Violin plot](results/linking-time_600_violinplot.png)
+
+![Box plot](results/linking-time_600_boxplot.png)
+
+![Histogram](results/linking-time_600_histogram.png)
 
 ```
-N = 137
-[Low, High] = [9, 288]
-Quantile@25 = 49
-Quantile@50 = 72
-Quantile@75 = 120
-Mean =  92.45255474452554
+N = 444
+[Low, High] = [9.93, 557.195]
+Quantile@25 = 49.385
+Quantile@50 = 89.453
+Quantile@75 = 159.185
+Mean =  117.99254279279283
 ```
 
-For more detailed, and more up-to-date, results check [the results file](results.md) as well as the [results directory](results).
+For more detailed, and potentially more up-to-date, results check [the results file](results.md) as well as the [results directory](results).
