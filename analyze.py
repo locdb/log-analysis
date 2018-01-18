@@ -217,6 +217,14 @@ def plot_box_hist(numbers, prefix):
         plt.savefig(prefix+'_histogram.png')
 
         plt.clf()
+        plt.ylabel("amount")
+        plt.xlabel("seconds")
+        plt.xticks([0, 60, 120, 180, 240, 300, 360, 420, 540, 600])
+        plt.hist(numbers, [0, 60, 120, 180, 240, 300, 360, 420, 540, 600],
+                 color='royalblue', align='mid')
+        plt.savefig(prefix+'_histogram1.pdf')
+
+        plt.clf()
         plt.xlabel("seconds")
         # plt.yticks(["citation linking"])
         plt.violinplot(numbers, showmeans=True, showmedians=True, vert=False)
