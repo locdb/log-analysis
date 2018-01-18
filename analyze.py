@@ -76,20 +76,25 @@ def paired_times(timed_events, criterion):
     return captured_times
 
 
-def filter_and_process(entry_groups,
-                       key_start='SEARCH ISSUED',
-                       key_end='COMMIT PRESSED',
-                       sanity_interval=900):
+def filter_groups(entry_groups,
+                  criterion=('SEARCH ISSUED', 'COMMIT PRESSED'),
+                  should_contain=[],
+                  sanity_interval=None):
     """
     Filters the reference items for validity, then computes the time span
     for each reference and returns the mean time
     """
+    key_start, key_end = criterion
+
     def is_valid(ref):
         """ Returns true, iff entry_group is valid """
         times, events = list(zip(*ref))
         try:
             start = event_index(events, key_start)
             end = event_index(events, key_end)
+            for key in should_contain:
+                # will raise ValueError, when not contained
+                event_index(events, key)
         except ValueError:
             return False
         diff = times[end] - times[start]
@@ -100,16 +105,12 @@ def filter_and_process(entry_groups,
             return False
         if diff < timedelta():
             # This would be strange, still we need to make sure
-            return False
+            raise UserWarning("End event before start event")
         return True
 
     # First validity checks, such that invalid groups do not contribute to mean
     valid_groups = filter(is_valid, entry_groups)
-
-    timespans = [process_reference(g, key_start=key_start,
-                                   key_end=key_end) for g in valid_groups]
-
-    return timespans
+    return list(valid_groups)
 
 
 def compute_stats(timespans):
@@ -228,7 +229,6 @@ def plot_box_hist(numbers, prefix):
 def eval_span(event_groups,
               criterion,
               name,
-              sanity_interval=None,
               prefix_dir='results'):
     """
     Args
@@ -239,20 +239,20 @@ def eval_span(event_groups,
     name: identifer used for storage and reporting
     """
     key_start, key_end = criterion
-    timespans = filter_and_process(event_groups,
-                                   key_start=key_start,
-                                   key_end=key_end,
-                                   sanity_interval=sanity_interval)
+    timespans = [process_reference(g, key_start=key_start,
+                                   key_end=key_end) for g in event_groups]
+    # timespans = filter_and_process(event_groups,
+    #                                key_start=key_start,
+    #                                key_end=key_end,
+    #                                sanity_interval=sanity_interval)
     timespans = [t.total_seconds() for t in timespans]
     print("\n## Span Criterion: ", name + "\n")
-    print("Sanity interval: {} seconds.".format(sanity_interval))
     print("\n```")
     stats = compute_stats(timespans)
     print_stats(*stats)
     print("```\n")
     os.makedirs(prefix_dir, exist_ok=True)
-    prefix = os.path.join(prefix_dir, name.lower().replace(' ', '-')) \
-        + '_' + str(sanity_interval) if sanity_interval is not None else 'ALL'
+    prefix = os.path.join(prefix_dir, name.lower().replace(' ', '-'))
 
     print("Writing results to", prefix + '*', file=sys.stderr)
     # write raw seconds file
@@ -281,8 +281,7 @@ def eval_multi_spans(events, criterion, name, sanity_interval=None,
     print_stats(*stats)
     print("```\n")
     os.makedirs(prefix_dir, exist_ok=True)
-    prefix = os.path.join(prefix_dir, name.lower().replace(' ', '-')) \
-        + '_' + str(sanity_interval) if sanity_interval is not None else 'ALL'
+    prefix = os.path.join(prefix_dir, name.lower().replace(' ', '-'))
 
     print("Writing results to", prefix + '*', file=sys.stderr)
     # write raw seconds file
@@ -298,18 +297,7 @@ def main():
     """ Do all the analysis """
     events_by_entry, ungrouped_events = parse_input(fileinput.input())
     event_groups = events_by_entry.values()
-
     sanity_interval = 600
-
-    print("# Results\n")
-
-    print("N = ", len(event_groups))
-
-    # Using very first SEARCH ISSUED is more reliable than REFERENCE SELECTED
-    eval_span(event_groups,
-              ('SEARCH ISSUED', 'COMMIT PRESSED'),
-              sanity_interval=sanity_interval,
-              name='linking time')
 
     def is_internal_suggestion(evnt):
         """ True iff event corresponds to arrival of internal suggestions """
@@ -319,22 +307,45 @@ def main():
         """ True iff event corresponds to arrival of external suggestions """
         return evnt['msg'] == "SUGGESTIONS ARRIVED" and not evnt['internal']
 
-    eval_span(event_groups,
-              ('SEARCH ISSUED', is_internal_suggestion),
-              sanity_interval=sanity_interval,
-              name='internal suggestion time')
-    eval_span(event_groups,
-              ('SEARCH ISSUED', is_external_suggestion),
-              sanity_interval=sanity_interval,
-              name='external suggestion time')
+    valid_groups = filter_groups(event_groups,
+                                 ("SEARCH ISSUED", "COMMIT PRESSED"),
+                                 should_contain=[is_internal_suggestion, is_external_suggestion],
+                                 sanity_interval=sanity_interval)
 
-    eval_count(event_groups,
+    print("# Results\n")
+
+    print("Sanity interval", sanity_interval)
+
+    print("Inspected groups = ", len(event_groups))
+    print("Valid groups = ", len(valid_groups))
+    print("Link resolved within sanity interval and contain both internal and external suggestions")
+
+    out_dir = os.path.join('results', str(sanity_interval) if sanity_interval
+                           else 'ALL')
+    # Using very first SEARCH ISSUED is more reliable than REFERENCE SELECTED
+    eval_span(valid_groups,
+              ('SEARCH ISSUED', 'COMMIT PRESSED'),
+              name='linking time',
+              prefix_dir=out_dir)
+
+    eval_span(valid_groups,
+              ('SEARCH ISSUED', is_internal_suggestion),
+              name='internal suggestion time',
+              prefix_dir=out_dir)
+    eval_span(valid_groups,
+              ('SEARCH ISSUED', is_external_suggestion),
+              name='external suggestion time',
+              prefix_dir=out_dir)
+
+    eval_count(valid_groups,
                'SEARCH ISSUED',
-               name='number of issued searches')
+               name='number of issued searches',
+               prefix_dir=out_dir)
 
     eval_multi_spans(ungrouped_events, ('START EDITING', 'STOP EDITING'),
                      sanity_interval=sanity_interval,
-                     name='editing time')
+                     name='editing time',
+                     prefix_dir=out_dir)
 
 
 if __name__ == '__main__':

@@ -1,10 +1,12 @@
 # Results
 
-N =  620
+Sanity interval 600
+Inspected groups =  620
+Valid groups =  444
+Link resolved within sanity interval and contain both internal and external suggestions
 
 ## Span Criterion:  linking time
 
-Sanity interval: 600 seconds.
 
 ```
 N = 444
@@ -18,29 +20,27 @@ Mean =  117.99254279279283
 
 ## Span Criterion:  internal suggestion time
 
-Sanity interval: 600 seconds.
 
 ```
-N = 620
-[Low, High] = [0.015, 10.337]
-Quantile@25 = 0.048
-Quantile@50 = 0.059
-Quantile@75 = 0.08
-Mean =  0.10760322580645157
+N = 444
+[Low, High] = [0.015, 0.537]
+Quantile@25 = 0.047
+Quantile@50 = 0.057
+Quantile@75 = 0.073
+Mean =  0.06922297297297295
 ```
 
 
 ## Span Criterion:  external suggestion time
 
-Sanity interval: 600 seconds.
 
 ```
-N = 605
-[Low, High] = [0.105, 581.547]
-Quantile@25 = 0.705
-Quantile@50 = 1.118
-Quantile@75 = 3.21
-Mean =  5.542818181818179
+N = 444
+[Low, High] = [0.498, 95.652]
+Quantile@25 = 0.698
+Quantile@50 = 0.886
+Quantile@75 = 2.9
+Mean =  3.9657882882882878
 ```
 
 
@@ -48,12 +48,12 @@ Mean =  5.542818181818179
 
 
 ```
-N = 620
+N = 444
 [Low, High] = [1, 36]
 Quantile@25 = 2
 Quantile@50 = 2
-Quantile@75 = 4
-Mean =  3.358064516129032
+Quantile@75 = 3
+Mean =  2.894144144144144
 ```
 
 

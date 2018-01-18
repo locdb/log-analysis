@@ -1,6 +1,6 @@
-N = 620
+N = 444
 [Low, High] = [1, 36]
 Quantile@25 = 2
 Quantile@50 = 2
-Quantile@75 = 4
-Mean =  3.358064516129032
+Quantile@75 = 3
+Mean =  2.894144144144144
