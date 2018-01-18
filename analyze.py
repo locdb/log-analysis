@@ -216,7 +216,8 @@ def plot_box_hist(numbers, prefix):
         plt.savefig(prefix+'_histogram.png')
 
         plt.clf()
-        plt.violinplot(numbers)
+        plt.xlabel("seconds")
+        plt.violinplot(numbers, showmeans=True, showmedians=True, vert=True)
         plt.savefig(prefix+'_violinplot.png')
     except ImportError:
         print("[warning] For data visualization, matplotlib is required",
