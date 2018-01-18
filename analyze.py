@@ -206,17 +206,20 @@ def plot_box_hist(numbers, prefix):
     try:
         from matplotlib import pyplot as plt
         plt.clf()
+        plt.figure(figsize=(2, 1))
         plt.ylabel("seconds")
         plt.boxplot(numbers)
         plt.savefig(prefix+'_boxplot.png')
 
         plt.clf()
+        plt.figure(figsize=(2, 1))
         plt.ylabel("amount")
         plt.xlabel("seconds")
         plt.hist(numbers, color='b')
         plt.savefig(prefix+'_histogram.png')
 
         plt.clf()
+        plt.figure(figsize=(2, 1))
         plt.ylabel("amount")
         plt.xlabel("seconds")
         plt.xticks([0, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600])
@@ -225,6 +228,7 @@ def plot_box_hist(numbers, prefix):
         plt.savefig(prefix+'_histogram1.pdf')
 
         plt.clf()
+        plt.figure(figsize=(2, 1))
         plt.xlabel("seconds")
         # plt.yticks(["citation linking"])
         plt.violinplot(numbers, showmeans=True, showmedians=True, vert=False)
