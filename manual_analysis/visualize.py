@@ -45,9 +45,9 @@ def plot(numbers):
         plt.text(idx_max, max, "max=" + str(max), ha='right', va='bottom')
 
         plt.scatter(x=idx_q1, y=q1, marker="x", color=sns.color_palette()[1])
-        plt.text(idx_q1, q1-20, "q1=" + str(q1),ha='left', va='top')
+        plt.text(idx_q1, q1-20, "Q1=" + str(q1),ha='left', va='top')
         plt.scatter(x=idx_q3, y=q3, marker="x", color=sns.color_palette()[1])
-        plt.text(idx_q3, q3, "q3=" + str(q3), ha='right', va='bottom')
+        plt.text(idx_q3, q3, "Q3=" + str(q3), ha='right', va='bottom')
 
         plt.savefig('scatter.pdf', bbox_inches='tight')
         #plt.show()
