@@ -49,8 +49,8 @@ def plot(numbers):
         plt.scatter(x=idx_q3, y=q3, marker="x", color=sns.color_palette()[1])
         plt.text(idx_q3, q3, "q3=" + str(q3), ha='right', va='bottom')
 
-        #plt.savefig('scatter.pdf', bbox_inches='tight')
-        plt.show()
+        plt.savefig('scatter.pdf', bbox_inches='tight')
+        #plt.show()
 
 
 def main():
