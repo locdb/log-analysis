@@ -1,0 +1,6 @@
+N = 27
+[Low, High] = [0, 1]
+Quantile@25 = 0
+Quantile@50 = 0
+Quantile@75 = 0
+Mean =  0.07407407407407407

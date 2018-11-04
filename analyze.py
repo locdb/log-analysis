@@ -11,6 +11,8 @@ from operator import itemgetter
 from datetime import datetime, timedelta
 import seaborn as sns
 
+# import pprint
+
 
 def event_index(events, key, start=0):
     """
@@ -42,10 +44,9 @@ def process_reference(timed_events,
     """
     times, events = list(zip(*timed_events))
 
-    # start = msgs.index(start_event)
-    # end = msgs.index(end_event)
     start = event_index(events, key_start)
     end = event_index(events, key_end)
+    # print(start, '<', end)
     assert start < end, "Start event after end event"
 
     span = times[end] - times[start]
@@ -106,7 +107,9 @@ def filter_groups(entry_groups,
             return False
         if diff < timedelta():
             # This would be strange, still we need to make sure
-            raise UserWarning("End event before start event")
+            print("[warning] End event before start event, discarding.")
+            # raise UserWarning("End event before start event")
+            return False
         return True
 
     # First validity checks, such that invalid groups do not contribute to mean
@@ -308,7 +311,8 @@ def eval_multi_spans(events, criterion, name, sanity_interval=None,
 def main():
     """ Do all the analysis """
     events_by_entry, ungrouped_events = parse_input(fileinput.input())
-    event_groups = events_by_entry.values()
+    # pprint.pprint(events_by_entry)
+    event_groups = list(events_by_entry.values())
     sanity_interval = 600
 
     def is_internal_suggestion(evnt):
@@ -320,7 +324,7 @@ def main():
         return evnt['msg'] == "SUGGESTIONS ARRIVED" and not evnt['internal']
 
     valid_groups = filter_groups(event_groups,
-                                 ("SEARCH ISSUED", "COMMIT PRESSED"),
+                                 ("REFERENCE SELECTED", "COMMIT PRESSED"),
                                  should_contain=[is_internal_suggestion, is_external_suggestion],
                                  sanity_interval=sanity_interval)
 
@@ -336,28 +340,30 @@ def main():
                            else 'ALL')
     # Using very first SEARCH ISSUED is more reliable than REFERENCE SELECTED
     eval_span(valid_groups,
-              ('SEARCH ISSUED', 'COMMIT PRESSED'),
+              ('REFERENCE SELECTED', 'COMMIT PRESSED'),
               name='linking time',
               prefix_dir=out_dir)
 
     eval_span(valid_groups,
-              ('SEARCH ISSUED', is_internal_suggestion),
+              ('REFERENCE SELECTED', is_internal_suggestion),
               name='internal suggestion time',
               prefix_dir=out_dir)
     eval_span(valid_groups,
-              ('SEARCH ISSUED', is_external_suggestion),
+              ('REFERENCE SELECTED', is_external_suggestion),
               name='external suggestion time',
               prefix_dir=out_dir)
 
     eval_count(valid_groups,
                'SEARCH ISSUED',
-               name='number of issued searches',
+               name='number of issued extra-searches',
                prefix_dir=out_dir)
 
-    eval_multi_spans(ungrouped_events, ('START EDITING', 'STOP EDITING'),
-                     sanity_interval=sanity_interval,
-                     name='editing time',
-                     prefix_dir=out_dir)
+    if ungrouped_events:
+        print("No ungrouped (such as 'EDITING') events found", file=sys.stderr)
+        eval_multi_spans(ungrouped_events, ('START EDITING', 'STOP EDITING'),
+                         sanity_interval=sanity_interval,
+                         name='editing time',
+                         prefix_dir=out_dir)
 
 
 if __name__ == '__main__':
