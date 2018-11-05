@@ -1,21 +1,23 @@
 [warning] End event before start event, discarding.
+[warning] Exceeds sanity interval, discarding: 2 days, 22:30:48.930000 > 600
+[warning] Exceeds sanity interval, discarding: 0:12:52.747000 > 600
 # Results
 
 Sanity interval 600
-Inspected groups =  61
-Valid groups =  27
+Inspected groups =  180
+Valid groups =  56
 Link resolved within sanity interval and contain both internal and external suggestions
 
 ## Span Criterion:  linking time
 
 
 ```
-N = 27
-[Low, High] = [3.777, 95.363]
-Quantile@25 = 4.589
-Quantile@50 = 8.129
-Quantile@75 = 19.212
-Mean =  16.112481481481478
+N = 56
+[Low, High] = [3.777, 535.333]
+Quantile@25 = 7.79
+Quantile@50 = 12.55
+Quantile@75 = 21.219
+Mean =  29.43166071428572
 ```
 
 
@@ -23,12 +25,12 @@ Mean =  16.112481481481478
 
 
 ```
-N = 27
-[Low, High] = [0.144, 0.613]
-Quantile@25 = 0.28
-Quantile@50 = 0.358
-Quantile@75 = 0.395
-Mean =  0.34511111111111104
+N = 56
+[Low, High] = [0.144, 34.777]
+Quantile@25 = 0.285
+Quantile@50 = 0.34
+Quantile@75 = 0.393
+Mean =  0.953482142857143
 ```
 
 
@@ -36,12 +38,12 @@ Mean =  0.34511111111111104
 
 
 ```
-N = 27
-[Low, High] = [0.164, 0.591]
-Quantile@25 = 0.266
-Quantile@50 = 0.341
-Quantile@75 = 0.4
-Mean =  0.3397037037037037
+N = 56
+[Low, High] = [0.078, 0.591]
+Quantile@25 = 0.274
+Quantile@50 = 0.329
+Quantile@75 = 0.387
+Mean =  0.332125
 ```
 
 
@@ -49,11 +51,11 @@ Mean =  0.3397037037037037
 
 
 ```
-N = 27
-[Low, High] = [0, 1]
+N = 56
+[Low, High] = [0, 4]
 Quantile@25 = 0
 Quantile@50 = 0
 Quantile@75 = 0
-Mean =  0.07407407407407407
+Mean =  0.14285714285714285
 ```
 

@@ -45,7 +45,7 @@ def process_reference(timed_events,
     times, events = list(zip(*timed_events))
 
     start = event_index(events, key_start)
-    end = event_index(events, key_end)
+    end = event_index(events, key_end, start=start)
     # print(start, '<', end)
     assert start < end, "Start event after end event"
 
@@ -321,9 +321,13 @@ def main():
     sanity_interval = 600
 
 
-    def is_start_event(evnt):
-        """ This is the start event """
-        return evnt['msg'] == 'REFERENCE SELECTED' or evnt['msg'] == 'SEARCH ISSUED'
+    # def is_start_event(evnt):
+    #     """ This is the start event """
+    #     return evnt['msg'] == 'REFERENCE SELECTED' or evnt['msg'] == 'SEARCH ISSUED'
+
+
+    # Clean logs do use this as start event
+    is_start_event = 'REFERENCE SELECTED'
 
 
     is_end_event = 'COMMIT PRESSED'
