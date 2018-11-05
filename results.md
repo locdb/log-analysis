@@ -45,7 +45,7 @@ Mean =  0.3397037037037037
 ```
 
 
-## Count Criterion:  number of issued extra-searches
+## Count Criterion:  number of issued extra searches
 
 
 ```

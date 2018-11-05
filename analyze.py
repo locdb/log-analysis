@@ -11,7 +11,7 @@ from operator import itemgetter
 from datetime import datetime, timedelta
 import seaborn as sns
 
-# import pprint
+import pprint
 
 
 def event_index(events, key, start=0):
@@ -102,6 +102,7 @@ def filter_groups(entry_groups,
         diff = times[end] - times[start]
         if sanity_interval is not None \
                 and diff > timedelta(seconds=sanity_interval):
+            print("[warning] Exceeds sanity interval, discarding:", diff, '>', sanity_interval)
             # sanity check, maximum seconds for a single citation
             # (defaults to 15 minutes)
             return False
@@ -119,7 +120,10 @@ def filter_groups(entry_groups,
 
 def compute_stats(timespans):
     """ Computes basic statistics of the timespans """
+    if not timespans:
+        return 0, [None, None], {}, None
     n_samples = len(timespans)
+
     interval = (min(timespans), max(timespans))
     try:
         mean = sum(timespans) / len(timespans)
@@ -261,6 +265,7 @@ def eval_span(event_groups,
     #                                key_end=key_end,
     #                                sanity_interval=sanity_interval)
     timespans = [t.total_seconds() for t in timespans]
+    # print(timespans)
     print("\n## Span Criterion: ", name + "\n")
     print("\n```")
     stats = compute_stats(timespans)
@@ -315,6 +320,15 @@ def main():
     event_groups = list(events_by_entry.values())
     sanity_interval = 600
 
+
+    def is_start_event(evnt):
+        """ This is the start event """
+        return evnt['msg'] == 'REFERENCE SELECTED' or evnt['msg'] == 'SEARCH ISSUED'
+
+
+    is_end_event = 'COMMIT PRESSED'
+
+
     def is_internal_suggestion(evnt):
         """ True iff event corresponds to arrival of internal suggestions """
         return evnt['msg'] == "SUGGESTIONS ARRIVED" and evnt['internal']
@@ -324,7 +338,7 @@ def main():
         return evnt['msg'] == "SUGGESTIONS ARRIVED" and not evnt['internal']
 
     valid_groups = filter_groups(event_groups,
-                                 ("REFERENCE SELECTED", "COMMIT PRESSED"),
+                                 (is_start_event, is_end_event),
                                  should_contain=[is_internal_suggestion, is_external_suggestion],
                                  sanity_interval=sanity_interval)
 
@@ -338,24 +352,30 @@ def main():
 
     out_dir = os.path.join('results', str(sanity_interval) if sanity_interval
                            else 'ALL')
+
+    if not valid_groups:
+        pprint.pprint(event_groups)
+        print("No valid groups found. Abort.")
+        exit(-1)
+
     # Using very first SEARCH ISSUED is more reliable than REFERENCE SELECTED
     eval_span(valid_groups,
-              ('REFERENCE SELECTED', 'COMMIT PRESSED'),
+              (is_start_event, is_end_event),
               name='linking time',
               prefix_dir=out_dir)
 
     eval_span(valid_groups,
-              ('REFERENCE SELECTED', is_internal_suggestion),
+              (is_start_event, is_internal_suggestion),
               name='internal suggestion time',
               prefix_dir=out_dir)
     eval_span(valid_groups,
-              ('REFERENCE SELECTED', is_external_suggestion),
+              (is_start_event, is_external_suggestion),
               name='external suggestion time',
               prefix_dir=out_dir)
 
     eval_count(valid_groups,
                'SEARCH ISSUED',
-               name='number of issued extra-searches',
+               name='number of issued extra searches',
                prefix_dir=out_dir)
 
     if ungrouped_events:
