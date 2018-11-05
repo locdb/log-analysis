@@ -233,7 +233,7 @@ def plot_box_hist(numbers, prefix):
         plt.xticks([0, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600])
         plt.hist(numbers, [0, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600],
                  align='mid', rwidth=.5)
-        plt.savefig(prefix+'_histogram2.pdf', bbox_inches='tight')
+        plt.savefig(prefix+'_histogram2.png', bbox_inches='tight')
 
         plt.clf()
         plt.xlabel("seconds")
