@@ -15,11 +15,9 @@ or manually perform the following steps:
 
 Based on the time between `SEARCH ISSUED` and `COMMIT PRESSED`. Sanity cut-off at 5 minutes.
 
-![Violin plot](results/linking-time_600_violinplot.png)
 
-![Box plot](results/linking-time_600_boxplot.png)
 
-![Histogram](results/linking-time_600_histogram.png)
+#### First evaluation (Jan 2018)
 
 ```
 N = 444
@@ -29,5 +27,13 @@ Quantile@50 = 89.453
 Quantile@75 = 159.185
 Mean =  117.99254279279283
 ```
+
+### Second Evaluation (Nov 2018)
+
+![Violin plot](results/600/linking-time_violinplot2.png
+
+![Box plot](results/600/linking-time_boxplot.png)
+
+![Histogram](results/600/linking-time_histogram2.pngg)
 
 For more detailed, and potentially more up-to-date, results check [the results file](results.md) as well as the [results directory](results).
