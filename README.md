@@ -28,12 +28,23 @@ Quantile@75 = 159.185
 Mean =  117.99254279279283
 ```
 
-### Second Evaluation (Nov 2018)
+### Preliminary Results of Second Evaluation (Nov 2018)
 
-![Violin plot](results/600/linking-time_violinplot2.png
+
+```
+N = 56
+[Low, High] = [3.777, 535.333]
+Quantile@25 = 7.79
+Quantile@50 = 12.55
+Quantile@75 = 21.219
+Mean =  29.43166071428572
+```
+
+
+![Violin plot](results/600/linking-time_violinplot2.png)
 
 ![Box plot](results/600/linking-time_boxplot.png)
 
-![Histogram](results/600/linking-time_histogram2.pngg)
+![Histogram](results/600/linking-time_histogram2.png)
 
 For more detailed, and potentially more up-to-date, results check [the results file](results.md) as well as the [results directory](results).
